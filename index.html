@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ecodibba RFQ 3.0</title>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700&subset=latin-ext" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+
+
+
+
+  <style>
+    * {
+      scroll-behavior: smooth;
+      transition: 1500ms;
+    }
+
+    .swiper-button-prev {
+      margin-top: 5%;
+      color: aquamarine;
+
+    }
+
+    body {
+      width: fit-content;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 100%;
+    }
+
+    #side-button {
+      display: none;
+    }
+
+    .paralax {
+      display: flex;
+      /* Enable flexbox layout */
+      flex-direction: row;
+      /* Align items in a row */
+      overflow-x: hidden;
+      /* Enable horizontal scrolling */
+      scroll-snap-type: x mandatory;
+      /* Enable snap scrolling */
+      width: 100vw;
+      /* Ensure the container takes up the full viewport width */
+      height: 100vh;
+      scrollbar-width: none;
+      /* Hide scrollbar in Firefox */
+      -ms-overflow-style: none;
+      /* Hide scrollbar in IE and Edge */
+      /* Ensure the container takes up the full viewport height */
+    }
+
+    .paralax>section {
+      flex: none;
+      /* Prevent sections from growing or shrinking */
+      width: 100vw;
+      height: 100vh;
+      /* Ensure each section takes up the full viewport width */
+      overflow-y: auto;
+      /* Ensure each section takes up the full viewport height */
+      scroll-snap-align: start;
+      /* Snap to the start of each section */
+      scrollbar-width: none;
+      /* Hide scrollbar in Firefox */
+      -ms-overflow-style: none;
+    }
+
+    .paralax::-webkit-scrollbar {
+      display: none;
+      /* Hide scrollbar in WebKit browsers */
+    }
+
+    .paralax>section::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hidden {
+      opacity: 0;
+      transition: opacity 1s ease-out;
+      pointer-events: none;
+    }
+
+    .visible {
+      opacity: 1;
+      transition-property: inherit;
+
+    }
+
+
+    #loader1 {
+      height: 700px;
+      z-index: 10;
+
+
+    }
+
+    #links {
+      width: 50%;
+      display: flexbox;
+      flex-direction: row;
+      position: fixed;
+      right: -10%;
+
+    }
+
+    #links>a {
+      padding: 1.5%;
+      text-align: right;
+
+    }
+
+    #links>a:hover {
+      background-color: rgb(0, 255, 123);
+      color: #fff;
+      border-radius: 35px;
+      cursor: pointer;
+    }
+
+    #side-menu {
+      background-color: rgb(0, 28, 52);
+      color: rgb(0, 255, 123);
+      height: 100vh;
+      width: 80%;
+      position: fixed;
+      top: 0;
+      z-index: 499;
+      transform: translateX(-100%);
+    }
+
+    #side-menu>nav {
+      display: block;
+      color: #fff;
+    }
+
+    .side-links {
+      padding: 3%;
+      border-radius: 55px;
+    }
+
+    .side-links:hover {
+      background-color: #2c3e50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    #prev-1,
+    #prev-2,
+    #prev-3,
+    #prev-4 {
+      margin-bottom: 3%;
+    }
+
+    #Next-1,
+    #Next-2 {
+      margin-top: 5%;
+    }
+
+    @media only screen and (min-width: 320px) {
+      .swiper-button-prev {
+        margin-top: 40%;
+
+      }
+
+      #side-button {
+        display: flex;
+      }
+
+      .scroll-container {
+        width: 100%;
+        height: 50rem;
+        overflow: hidden;
+        position: relative;
+        margin-top: 37%;
+      }
+
+      .scroll-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: max-content;
+        padding-bottom: 25%;
+      }
+
+      #links {
+        display: none;
+      }
+
+      header {
+        display: flex;
+      }
+    }
+
+
+    @media only screen and (min-width: 768px) {
+      .scroll-container {
+        width: 100%;
+        height: 50rem;
+        overflow: hidden;
+        position: relative;
+        margin-top: 7%;
+      }
+
+      #side-button {
+        display: flex;
+      }
+
+      .swiper-button-prev {
+        margin-top: 5%;
+
+      }
+
+      .scroll-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: max-content;
+        padding-bottom: 25%;
+      }
+
+    }
+
+    .scroll-content {
+      padding-top: 2%;
+    }
+
+    @media only screen and (min-width: 1024px) {
+      .scroll-container {
+        width: 100%;
+        height: 70rem;
+        overflow: hidden;
+        position: relative;
+        margin-top: 2%;
+      }
+
+      .scroll-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: max-content;
+        padding-bottom: 25%;
+      }
+
+      #side-button {
+        display: none;
+      }
+
+      #links {
+        display: inline;
+        width: 50%;
+        display: flexbox;
+        flex-direction: row;
+        position: fixed;
+        right: -5%;
+
+      }
+
+    }
+
+    @media only screen and (min-width: 1440px) {
+
+
+      #links {
+        display: inline;
+        width: 50%;
+        display: flexbox;
+        flex-direction: row;
+        position: fixed;
+        right: -10%;
+
+      }
+
+    }
+
+    .txt-btn {
+      padding: 0.5%;
+      border-radius: 25px;
+      padding-left: 1%;
+      padding-right: 1%;
+      transition: 1000;
+    }
+
+    .txt-btn:hover {
+      color: #fff;
+      background-color: rgb(0, 228, 163);
+      cursor: pointer;
+
+    }
+
+    header {
+      z-index: 500;
+      position: fixed;
+      top: 0px;
+      width: 100%;
+      background-color: #fff;
+
+    }
+
+    .box-type:hover {
+      cursor: pointer;
+
+    }
+
+    .swiper-container {
+      width: 86%;
+      height: 400px;
+      /* Adjust height if needed */
+      overflow: hidden;
+      padding: 20px 0;
+    }
+
+    .swiper-wrapper {
+      display: flex;
+      transition-property: transform;
+      margin: auto;
+    }
+
+    .swiper-slide {
+      flex-shrink: 0;
+      width: 100%;
+      /* Adjust width if needed */
+      height: 100%;
+      /* Ensure slides are properly sized */
+    }
+
+    section {
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-900 ">
+
+
+  <!-- header section-->
+  <header class="text-gray-400 bg-gray-900 body-font ">
+
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center"
+      style="position:fixed;left:0px;">
+      <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
+        <img src="logo.png" alt="" width="15%">
+        <span class="ml-3 text-xl"><span style="color:rgb(0, 255, 123);">eco</span>dibba</span>
+      </a>
+      <nav id="links">
+        <a class="mr-5 hover:text-white">First Link</a>
+        <a class="mr-5 hover:text-white">Second Link</a>
+        <a class="mr-5 hover:text-white">Third Link</a>
+        <a class="mr-5 hover:text-white">Third Link</a>
+      </nav>
+
+      <button
+        class="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"
+        style="position: fixed;right:50px;" id="side-button" onclick="toggle()">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15" />
+        </svg>
+      </button>
+
+    </div>
+
+
+  </header>
+  <section class="text-gray-400 bg-gray-900 body-font  " id="side-menu">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="flex flex-col text-center w-full mb-20">
+        <nav style="display:flex;flex-direction:column;text-align:left;">
+          <a class="mr-5 hover:text-white side-links">First Link</a>
+          <a class="mr-5 hover:text-white side-links">Second Link</a>
+          <a class="mr-5 hover:text-white side-links">Third Link</a>
+          <a class="mr-5 hover:text-white side-links">Fourth Link</a>
+        </nav>
+      </div>
+  </section>
+
+
+  <div class="paralax">
+    <section class="text-gray-400  body-font overflow-y-auto  " id="menu" style="margin-top: 5%;">
+      <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-col text-center w-full mb-20">
+          <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">Choose the type of box
+          </h1>
+          <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon
+            brooklyn
+            asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of
+            them
+            man bun deep jianbing selfies heirloom.</p>
+        </div>
+
+        <div class="flex flex-wrap -m-4">
+          <div class="swiper-container" style="width: 87%;margin:auto;">
+
+            <div class="swiper-wrapper">
+              <!-- Slides -->
+              <div class="swiper-slide">
+                <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg box-type">
+                  <img class="h-40 rounded w-full object-cover object-center mb-6" src="1.jpg" alt="content">
+                  <h3 class="tracking-widest text-green-400 text-xs font-medium title-font">SUBTITLE</h3>
+                  <h2 class="text-lg text-white font-medium title-font mb-4">Chichen Itza</h2>
+                  <p class="leading-relaxed text-white">Fingerstache flexitarian street art 8-bit
+                    waistcoat.
+                    Distillery hexagon disrupt edison bulbche.</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg box-type">
+                  <img class="h-40 rounded w-full object-cover object-center mb-6" src="1.jpg" alt="content">
+                  <h3 class="tracking-widest text-green-400 text-xs font-medium title-font">SUBTITLE</h3>
+                  <h2 class="text-lg text-white font-medium title-font mb-4">Chichen Itza</h2>
+                  <p class="leading-relaxed text-white">Fingerstache flexitarian street art 8-bit
+                    waistcoat.
+                    Distillery hexagon disrupt edison bulbche.</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg box-type">
+                  <img class="h-40 rounded w-full object-cover object-center mb-6" src="1.jpg" alt="content">
+                  <h3 class="tracking-widest text-green-400 text-xs font-medium title-font">SUBTITLE</h3>
+                  <h2 class="text-lg text-white font-medium title-font mb-4">Chichen Itza</h2>
+                  <p class="leading-relaxed text-white">Fingerstache flexitarian street art 8-bit
+                    waistcoat. Distillery hexagon disrupt edison bulbche.</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg box-type">
+                  <img class="h-40 rounded w-full object-cover object-center mb-6" src="1.jpg" alt="content">
+                  <h3 class="tracking-widest text-green-400 text-xs font-medium title-font">SUBTITLE</h3>
+                  <h2 class="text-lg text-white font-medium title-font mb-4">Chichen Itza</h2>
+                  <p class="leading-relaxed text-white">Fingerstache flexitarian street art 8-bit
+                    waistcoat.
+                    Distillery hexagon disrupt edison bulbche.</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg box-type">
+                  <img class="h-40 rounded w-full object-cover object-center mb-6" src="2.jpg" alt="content">
+                  <h3 class="tracking-widest text-green-400 text-xs font-medium title-font">SUBTITLE</h3>
+                  <h2 class="text-lg text-white font-medium title-font mb-4">Chichen Itza</h2>
+                  <p class="leading-relaxed text-white">Fingerstache flexitarian street art 8-bit
+                    waistcoat.
+                    Distillery hexagon disrupt edison bulbche.</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg box-type">
+                  <img class="h-40 rounded w-full object-cover object-center mb-6" src="2.jpg" alt="content">
+                  <h3 class="tracking-widest text-green-400 text-xs font-medium title-font">SUBTITLE</h3>
+                  <h2 class="text-lg text-white font-medium title-font mb-4">Chichen Itza</h2>
+                  <p class="leading-relaxed text-white">Fingerstache flexitarian street art 8-bit
+                    waistcoat.
+                    Distillery hexagon disrupt edison bulbche.</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg box-type">
+                  <img class="h-40 rounded w-full object-cover object-center mb-6" src="1.jpg" alt="content">
+                  <h3 class="tracking-widest text-green-400 text-xs font-medium title-font">SUBTITLE</h3>
+                  <h2 class="text-lg text-white font-medium title-font mb-4">Chichen Itza</h2>
+                  <p class="leading-relaxed text-white">Fingerstache flexitarian street art 8-bit
+                    waistcoat.
+                    Distillery hexagon disrupt edison bulbche.</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg box-type">
+                  <img class="h-40 rounded w-full object-cover object-center mb-6" src="3.jpg" alt="content">
+                  <h3 class="tracking-widest text-green-400 text-xs font-medium title-font">SUBTITLE</h3>
+                  <h2 class="text-lg text-white font-medium title-font mb-4">Chichen Itza</h2>
+                  <p class="leading-relaxed text-white">Fingerstache flexitarian street art 8-bit
+                    waistcoat.
+                    Distillery hexagon disrupt edison bulbche.</p>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="bg-gray-800 bg-opacity-40 p-6 rounded-lg box-type">
+                  <img class="h-40 rounded w-full object-cover object-center mb-6" src="2.jpg" alt="content">
+                  <h3 class="tracking-widest text-green-400 text-xs font-medium title-font">SUBTITLE</h3>
+                  <h2 class="text-lg text-white font-medium title-font mb-4">Chichen Itza</h2>
+                  <p class="leading-relaxed text-white">Fingerstache flexitarian street art 8-bit
+                    waistcoat.
+                    Distillery hexagon disrupt edison bulbche.</p>
+                </div>
+              </div>
+              <!-- Repeat swiper-slide for other slides -->
+            </div>
+
+          </div>
+    </section>
+
+
+    <section class="text-gray-400 bg-gray-900 body-font" id="box_color">
+      <div class="container px-5 py-24 mx-auto" style="margin-top: 5%;width:85%;">
+        <p class="text-green-400 inline-flex items-center md:mb-4 lg:mb-0 txt-btn" id="prev-4">
+          <svg fill="none" stroke="currentColor" style="rotate: -180deg;margin-left:-2%" stroke-linecap="round"
+            stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>Previous
+        </p>
+        <div class="flex flex-wrap -mx-4 -mb-10 text-center">
+          <div class="sm:w-1/2 mb-10 px-4">
+            <div class="rounded-lg h-64 overflow-hidden">
+              <img alt="content" class="object-cover object-center h-full w-full"
+                src="/assets/box sheet color/brown.png">
+            </div>
+            <h2 class="title-font text-2xl font-medium text-white mt-6 mb-3">Brown Color</h2>
+            <p class="leading-relaxed text-base">Williamsburg occupy sustainable snackwave gochujang.
+              Pinterest
+              cornhole brunch, slow-carb neutra irony.</p>
+            <button
+              class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded"
+              onclick="forward('box_color','product')">Select</button>
+          </div>
+          <div class="sm:w-1/2 mb-10 px-4">
+            <div class="rounded-lg h-64 overflow-hidden">
+              <img alt="content" class="object-cover object-center h-full w-full"
+                src="assets\box sheet color\white.png">
+            </div>
+            <h2 class="title-font text-2xl font-medium text-white mt-6 mb-3">White Color</h2>
+            <p class="leading-relaxed text-base">Williamsburg occupy sustainable snackwave gochujang.
+              Pinterest
+              cornhole brunch, slow-carb neutra irony.</p>
+            <button
+              class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded"
+              onclick="forward('box_color','product')">Select</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="text-gray-400 bg-gray-900 body-font " id="product">
+      <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center" style="margin-top: 5%;">
+        <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+          <img class="object-cover object-center rounded" alt="hero" src="assets\specifications\download.gif">
+        </div>
+        <div
+          class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+          <p class="text-green-400 inline-flex items-center md:mb-4 lg:mb-0 txt-btn" id="prev-1">
+            <svg fill="none" stroke="currentColor" style="rotate: -180deg;margin-left:-2%" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>Previous
+          </p>
+          <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Box Specifiction</h1>
+
+
+          <p class="mb-8 leading-relaxed">Chillwave portland ugh, knausgaard fam polaroid iPhone. Man
+            braid swag
+            typewriter affogato, hella selvage wolf narwhal dreamcatcher.</p>
+          <div class="flex w-full md:justify-start justify-center items-end">
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <label for="hero-field" class="leading-7 text-sm text-gray-400">Length</label>
+              <input type="text" id="hero-fie" name="hero-field"
+                class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            </div>
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <label for="hero-field" class="leading-7 text-sm text-gray-400">Width</label>
+              <input type="text" id="hero-fielddd" name="hero-field"
+                class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            </div>
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <label for="hero-field" class="leading-7 text-sm text-gray-400">Height</label>
+              <input type="text" id="hero-fiddeld" name="hero-field"
+                class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            </div>
+
+          </div>
+
+          <p class="text-sm mt-2 text-gray-500 mb-8 w-full">( All the dimensions are in inches )</p>
+          <div class="flex w-full md:justify-start justify-center items-end">
+
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <label for="hero-field" class="leading-7 text-sm text-gray-400">Printed</label>
+              <select name="" id="printed"
+                class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="2" selected></option>
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="1">Yes</option>
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="0">No</option>
+              </select>
+            </div>
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <!-- <button
+                        class="inline-flex text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg">Button</button> -->
+
+            </div>
+
+          </div>
+
+    </section>
+    <section class="text-gray-400 bg-gray-900 body-font " id="print">
+      <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center" style="margin-top:5%;">
+        <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+          <img class="object-cover object-center rounded" alt="hero" src="assets\printed\download.gif">
+        </div>
+        <div
+          class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+          <p class="text-green-400 inline-flex items-center md:mb-4 lg:mb-0 txt-btn" id="prev-2">
+            <svg fill="none" stroke="currentColor" style="rotate: -180deg;margin-left:-2%" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>Previous
+          </p>
+          <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Print Specifiction</h1>
+          <p class="mb-8 leading-relaxed">Chillwave portland ugh, knausgaard fam polaroid iPhone. Man
+            braid swag
+            typewriter affogato, hella selvage wolf narwhal dreamcatcher.</p>
+          <div class="flex w-full md:justify-start justify-center items-end">
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <label for="hero-field" class="leading-7 text-sm text-gray-400">Color</label>
+              <select name="" id=""
+                class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="1">One</option>
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="2">Two</option>
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="3">Three</option>
+              </select>
+            </div>
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <button
+                class="flex mx-auto mt-6 text-white bg-green-500 border-0 py-2 px-5 focus:outline-none hover:bg-green-600 rounded"
+                onclick="">Upload Design</button>
+            </div>
+
+          </div>
+          <p class="text-green-400 inline-flex items-center md:mb-4 lg:mb-0 txt-btn" id="Next-1">Next
+            <svg fill="none" stroke="currentColor" style="margin-left:-2%" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="text-gray-400 bg-gray-900 body-font " id="order">
+      <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+        <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
+          <img class="object-cover object-center rounded" alt="hero" src="assets\order details\Untitled design.gif">
+        </div>
+        <div
+          class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+          <p class="text-green-400 inline-flex items-center md:mb-4 lg:mb-0 txt-btn" id="prev-3">
+            <svg fill="none" stroke="currentColor" style="rotate: -180deg;margin-left:-2%" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>Previous
+          </p>
+          <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">Quote Details</h1>
+
+
+          <p class="mb-8 leading-relaxed">Chillwave portland ugh, knausgaard fam polaroid iPhone. Man
+            braid swag
+            typewriter affogato, hella selvage wolf narwhal dreamcatcher.</p>
+          <div class="flex w-full md:justify-start justify-center items-end">
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <label for="hero-field" class="leading-7 text-sm text-gray-400">Quantity</label>
+              <input type="text" id="hero-fie" name="hero-field"
+                class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            </div>
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <label for="hero-field" class="leading-7 text-sm text-gray-400">Budget</label>
+              <input type="text" id="hero-fielddd" name="hero-field"
+                class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            </div>
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <label for="hero-field" class="leading-7 text-sm text-gray-400">Delivery within</label>
+              <select name="" id="printed"
+                class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="" selected></option>
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="1">1 Day</option>
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="2">2 Day</option>
+              </select>
+            </div>
+
+          </div>
+
+
+          <div class="flex w-full md:justify-start justify-center items-end">
+
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <label for="hero-field" class="leading-7 text-sm text-gray-400">Sourcing Purpose</label>
+              <select name="" id="printed"
+                class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="" selected></option>
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="1">Personal</option>
+                <option
+                  class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  value="0">Business</option>
+              </select>
+            </div>
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <label for="hero-field" class="leading-7 text-sm text-gray-400">Company Name</label>
+              <input type="text" id="hero-fie" name="hero-field"
+                class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            </div>
+            <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
+              <label for="hero-field" class="leading-7 text-sm text-gray-400">GST Number</label>
+              <input type="text" id="hero-fie" name="hero-field"
+                class="w-full bg-gray-800 rounded border bg-opacity-40 border-gray-700 focus:ring-2 focus:ring-green-900 focus:bg-transparent focus:border-green-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            </div>
+
+
+          </div>
+          <p class="text-green-400 inline-flex items-center md:mb-4 lg:mb-0 txt-btn" id="Next-2">Next
+            <svg fill="none" stroke="currentColor" style="margin-left:-2%" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </p>
+    </section>
+    <section class="text-gray-400 bg-gray-900 body-font relative;" id="Contact_Details">
+      <div style="height: 5rem;">
+
+      </div>
+      <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-col text-center w-full mb-12">
+          <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">Contact Details</h1>
+          <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn
+            asymmetrical gentrify.</p>
+        </div>
+
+        <div class="lg:w-1/2 md:w-2/3 mx-auto">
+          <div class="flex flex-wrap -m-2">
+            <div style="height: 5rem;">
+
+            </div>
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="c-name" class="leading-7 text-sm text-gray-400">Name</label>
+                <input type="text" id="c-name" name="c-name"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="c-email" class="leading-7 text-sm text-gray-400">Email</label>
+                <input type="email" id="c-email" name="c-email"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            <div style="height: 5rem;">
+
+            </div>
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="c-phone" class="leading-7 text-sm text-gray-400">Phone Number</label>
+                <input type="text" id="c-phone" name="c-phone"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="alt-c-phone" class="leading-7 text-sm text-gray-400">Alt. Phone Number</label>
+                <input type="text" id="alt-c-phone" name="alt-c-phone"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            <div style="height: 10rem;">
+
+            </div>
+
+          </div>
+          <div style="display: flex; width:90%;margin:auto;">
+            <div class="p-2 w-full">
+              <button
+                class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                onclick="forward('Contact_Details','order')">Prev.</button>
+            </div>
+            <div class="p-2 w-full">
+              <button
+                class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                onclick="forward('Contact_Details','Shipping_Details')">Next</button>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+
+
+    <section class="text-gray-400 bg-gray-900 body-font relative });" id="Shipping_Details">
+      <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-col text-center w-full mb-12">
+          <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">Shipping Details</h1>
+          <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn
+            asymmetrical gentrify.</p>
+        </div>
+
+        <div class="lg:w-1/2 md:w-2/3 mx-auto">
+          <div class="flex flex-wrap -m-2">
+            <div style="height: 5rem;">
+
+            </div>
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="s-name" class="leading-7 text-sm text-gray-400">Name</label>
+                <input type="text" id="s-name" name="s-name"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="s-pin" class="leading-7 text-sm text-gray-400">Pin code</label>
+                <input type="text" id="s-pin" name="s-pin"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="s-phone" class="leading-7 text-sm text-gray-400">Phone No.</label>
+                <input type="s-phone" id="s-phone" name="s-phone"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="s-state" class="leading-7 text-sm text-gray-400">State</label>
+                <input type="text" id="s-state" name="s-state"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+
+
+            <div class="p-2 w-full">
+              <div class="relative">
+                <label for="s-address" class="leading-7 text-sm text-gray-400">Shipping Address</label>
+                <textarea id="s-address" name="s-address"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                  placeholder="Please enter your full adderss with city and state."></textarea>
+              </div>
+            </div>
+
+            <div class="p-2 w-full">
+              <div class="relative">
+
+                <input type="checkbox" id="s-state" name="s-state"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  style="width: fit-content;">
+
+                <label for="s-address" class="leading-7 text-sm text-gray-400">Shipping Address is same as billing
+                  address</label>
+              </div>
+            </div>
+
+            <div style="display: flex; width:90%;margin:auto;">
+              <div class="p-2 w-full">
+                <button
+                  class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                  onclick="forward('Shipping_De0tails','Contact_Details')">Prev.</button>
+              </div>
+              <div class="p-2 w-full">
+
+                <button
+                  class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                  onclick="forward('Shipping_Details','Billing_Details')">Next</button>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="text-gray-400 bg-gray-900 body-font relative });" id="Billing_Details">
+      <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-col text-center w-full mb-12">
+          <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">Billing Details</h1>
+          <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn
+            asymmetrical gentrify.</p>
+        </div>
+
+        <div class="lg:w-1/2 md:w-2/3 mx-auto">
+          <div class="flex flex-wrap -m-2">
+            <div style="height: 5rem;">
+
+            </div>
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="b-name" class="leading-7 text-sm text-gray-400">Name</label>
+                <input type="text" id="b-name" name="b-name"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="b-pin" class="leading-7 text-sm text-gray-400">Pin code</label>
+                <input type="text" id="b-pin" name="b-pin"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="b-state" class="leading-7 text-sm text-gray-400">State</label>
+                <input type="text" id="b-state" name="b-state"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+            <div class="p-2 w-1/2">
+              <div class="relative">
+                <label for="b-city" class="leading-7 text-sm text-gray-400">City</label>
+                <input type="text" id="b-city" name="b-city"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              </div>
+            </div>
+
+
+            <div class="p-2 w-full">
+              <div class="relative">
+                <label for="b-address" class="leading-7 text-sm text-gray-400">Billing Address</label>
+                <textarea id="b-address" name="b-address"
+                  class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-green-500 focus:bg-gray-900 focus:ring-2 focus:ring-green-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+              </div>
+            </div>
+
+
+            <div style="display: flex; width:90%;margin:auto;">
+              <div class="p-2 w-full">
+                <button
+                  class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                  onclick="forward('Billing_Details','Shipping_Details')">Prev.</button>
+              </div>
+              <div class="p-2 w-full">
+                <button
+                  class="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                  onclick="forward('Billing_Details','loader1')">Submit</button>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+    </section>
+    <section class="text-gray-400 bg-gray-900 body-font" id="loader1">
+      <div class="container px-5 py-24 mx-auto">
+        <div class="xl:w-1/2 lg:w-3/4 w-full mx-auto text-center">
+          <center><img src="Animation - 1.gif" alt=""></center>
+          <p class="leading-relaxed text-lg">wait a while saving..</p>
+          <span class="inline-block h-1 w-10 rounded bg-green-500 mt-8 mb-6"></span>
+          <h2 class="text-white font-medium title-font tracking-wider text-sm">HOLDEN CAULFIELD</h2>
+          <p class="text-gray-500">Senior Product Designer</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <!---->
+
+  <script src="pin api.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+  <script>
+    var swiper = new Swiper('.swiper-container', {
+      loop: true,
+      autoplay: {
+        delay: 1100, // Delay between slides in milliseconds (3 seconds)
+        disableOnInteraction: false, // Autoplay won't stop after user interactions
+        reverseDirection: true,
+      },
+      navigation: {
+
+        prevEl: '.swiper-button-prev',
+      },
+
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      slidesPerView: 1,
+      spaceBetween: 35,
+      breakpoints: {
+        640: { slidesPerView: 1 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+        1280: { slidesPerView: 4 },
+      }
+    });
+
+    function forward(curr, next) {
+      
+      document.getElementById(next).scrollIntoView();
+    }
+    document.querySelectorAll(".box-type").forEach(
+      function (box) {
+        box.addEventListener("click", () => {
+          document.getElementById("box_color").scrollIntoView();
+
+        })
+      }
+    );
+    document.getElementById('printed').addEventListener('input', () => {
+      if (document.getElementById('printed').value == 0) {
+        
+        document.getElementById("print").style.display="none";
+        setTimeout(()=>{document.getElementById("order").scrollIntoView();},200);
+        
+      }
+      if (document.getElementById('printed').value == 1) {
+        
+        document.getElementById("print").style.display="flex";
+        setTimeout(()=>{document.getElementById("print").scrollIntoView();},200);
+      }
+
+
+    })
+
+    document.getElementById("prev-1").addEventListener("click", () => {
+      document.getElementById("box_color").scrollIntoView();
+    })
+    document.getElementById("prev-2").addEventListener("click", () => {
+      document.getElementById("product").scrollIntoView();
+    })
+    document.getElementById("prev-3").addEventListener("click", () => {
+      if (document.getElementById('printed').value == 0) {
+        document.getElementById("product").scrollIntoView();
+      }
+      else {
+        document.getElementById("print").scrollIntoView();
+      }
+    })
+    document.getElementById("prev-4").addEventListener("click", () => {
+      document.getElementById("menu").scrollIntoView();
+    })
+    document.getElementById("Next-1").addEventListener("click", () => {
+      document.getElementById("order").scrollIntoView();
+    })
+    document.getElementById("Next-2").addEventListener("click", () => {
+      document.getElementById("Contact_Details").scrollIntoView();
+    })
+
+    function toggle() {
+
+      if (document.getElementById('side-menu').style.transform == "translateX(-100%)") {
+        document.getElementById('side-menu').style.transform = "translateX(0%)";
+      }
+      else {
+        document.getElementById('side-menu').style.transform = "translateX(-100%)";
+      }
+
+    }
+    document.getElementById('side-menu').style.transform = "translateX(-100%)";
+
+  </script>
+
+
+</body>
+
+</html>
